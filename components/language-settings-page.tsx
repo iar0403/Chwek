@@ -23,7 +23,7 @@ export function LanguageSettingsPage({ onBack }: LanguageSettingsPageProps) {
   return (
     <div className="fixed inset-0 bg-[#F2F2F7] dark:bg-[#222222] z-50 overflow-y-auto bg-background">
       {/* Header */}
-      <div className="sticky top-0 bg-[#F2F2F7]/90 dark:bg-[#222222]/90 backdrop-blur-xl border-b border-border/50 px-6 py-4 flex items-center z-10 bg-background">
+      <div className="sticky top-0 bg-[#F2F2F7]/90 dark:bg-[#222222]/90 backdrop-blur-xl border-b border-border/50 pl-3 pr-3 py-4 flex items-center z-10 bg-background">
         <button
           onClick={onBack}
           className="w-9 h-9 rounded-full flex items-center justify-center dark:bg-neutral-700 active:scale-90 transition-transform bg-card"
@@ -34,7 +34,7 @@ export function LanguageSettingsPage({ onBack }: LanguageSettingsPageProps) {
       </div>
 
       {/* Content */}
-      <div className="px-6 pt-6">
+      <div className="pl-3 pr-3 pt-6">
         <h2 className="text-sm font-bold text-neutral-500 dark:text-neutral-400 mb-3 px-2">{t.languageSettings.title}</h2>
         <div className="liquid-glass rounded-3xl overflow-hidden">
           <div className="p-2 space-y-1">

@@ -111,7 +111,7 @@ export function ItemDetailPage({ mode, initialItem, onBack, onSave, onDelete }: 
   return (
     <div className="fixed inset-0 bg-background z-50 overflow-y-auto">
       {/* Header */}
-      <div className="sticky top-0 bg-background/90 backdrop-blur-xl border-b border-border/50 px-6 py-4 flex items-center justify-between z-10">
+      <div className="sticky top-0 bg-background/90 backdrop-blur-xl border-b border-border/50 pl-3 pr-3 py-4 flex items-center justify-between z-10">
         <button
           onClick={onBack}
           className="w-9 h-9 rounded-full flex items-center justify-center bg-muted hover:bg-muted/80 active:scale-90 transition-transform"

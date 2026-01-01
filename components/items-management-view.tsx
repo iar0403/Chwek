@@ -73,7 +73,7 @@ export function ItemsManagementView({ items, setItems }: ItemsManagementViewProp
         </button>
       </div>
 
-      <div className="px-6 pb-6 grid grid-cols-1 gap-2 pl-3">
+      <div className="pl-3 pr-3 pb-6 grid grid-cols-1 gap-2">
         {items.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
             <div className="w-24 h-24 rounded-full liquid-glass flex items-center justify-center mb-6">

@@ -57,12 +57,12 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
 
   return (
     <div className="min-h-full">
-      <div className="px-6 pt-10 pb-0 pl-3 pr-3">
+      <div className="px-6 pt-16 pb-0 pl-3 pr-3">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setFilter("all")}
-              className={`text-2xl font-bold transition-colors duration-200 ${
+              className={`text-[36px] font-bold transition-colors duration-200 ${
                 filter === "all" ? "text-foreground" : "text-muted-foreground"
               }`}
             >
@@ -70,7 +70,7 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
             </button>
             <button
               onClick={() => setFilter("unchecked")}
-              className={`text-2xl font-bold transition-colors duration-200 ${
+              className={`text-[36px] font-bold transition-colors duration-200 ${
                 filter === "unchecked" ? "text-foreground" : "text-muted-foreground"
               }`}
             >
@@ -144,9 +144,9 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
             </p>
           </div>
         ) : viewMode === "grid" ? (
-          <div className="grid grid-cols-2 gap-1">
+          <div className="grid grid-cols-2 gap-2">
             {filteredItems.map((item) => (
-              <ChecklistCardGrid key={item.id} item={item} onCheck={handleCheck} onUncheck={handleUncheck} />
+              <ChecklistCardGrid key={item.id} item={item} onCheck={handleCheck} />
             ))}
           </div>
         ) : (
