@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export', // 정적 사이트 생성
-  images: { unoptimized: true }, // 이미지 최적화 끄기 (앱에서는 필수)
+  output: 'export', // 이 줄이 반드시 있어야 합니다.
+  images: { unoptimized: true }, // 앱에서는 이미지 최적화 기능을 끌 필요가 있습니다.
 };
 
 export default nextConfig;
