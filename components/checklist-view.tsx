@@ -55,6 +55,15 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
     )
   }
 
+  const handleUncheck = (id: string) => {
+    setItems(
+      items.map((item) => {
+        if (item.id !== id) return item
+        return { ...item, lastChecked: null }
+      }),
+    )
+  }
+
   return (
     <div className="min-h-full">
       <div className="px-6 pt-16 pb-0 pl-3 pr-3">
@@ -146,13 +155,13 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
         ) : viewMode === "grid" ? (
           <div className="grid grid-cols-2 gap-2">
             {filteredItems.map((item) => (
-              <ChecklistCardGrid key={item.id} item={item} onCheck={handleCheck} />
+              <ChecklistCardGrid key={item.id} item={item} onCheck={handleCheck} onUncheck={handleUncheck} />
             ))}
           </div>
         ) : (
           <div className="space-y-4">
             {filteredItems.map((item) => (
-              <ChecklistCard key={item.id} item={item} onCheck={handleCheck} />
+              <ChecklistCard key={item.id} item={item} onCheck={handleCheck} onUncheck={handleUncheck} />
             ))}
           </div>
         )}
