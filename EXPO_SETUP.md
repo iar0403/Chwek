@@ -72,3 +72,5 @@ npx expo install expo-av expo-haptics
 - 기기의 햅틱 설정이 활성화되어 있는지 확인
 
 
+
+

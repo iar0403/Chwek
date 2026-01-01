@@ -5,9 +5,6 @@ import type { ChecklistItem } from "@/app/page"
 import { ChecklistCard } from "@/components/checklist-card"
 import { ChecklistCardGrid } from "@/components/checklist-card-grid"
 import { Check, Grid2X2, List, MoreVertical } from "lucide-react"
-import { useAppSettings } from "@/app/page"
-import { useTranslation } from "@/lib/i18n/useTranslation"
-import { playCheckFeedback, playUncheckFeedback } from "@/lib/haptics"
 
 interface ChecklistViewProps {
   items: ChecklistItem[]
@@ -18,8 +15,6 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
   const [filter, setFilter] = useState<"all" | "unchecked">("all")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [showDropdown, setShowDropdown] = useState(false)
-  const { settings } = useAppSettings()
-  const t = useTranslation(settings.language)
 
   const activeItems = items.filter((item) => item.isActive)
 
@@ -34,10 +29,7 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
           return elapsed >= resetTime
         })
 
-  const handleCheck = async (id: string) => {
-    // 햅틱 진동 및 사운드 재생
-    await playCheckFeedback()
-
+  const handleCheck = (id: string) => {
     setItems(
       items.map((item) => {
         if (item.id !== id) return item
@@ -63,38 +55,26 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
     )
   }
 
-  const handleUncheck = async (id: string) => {
-    // 체크 취소 시 경고 햅틱 피드백
-    await playUncheckFeedback()
-
-    setItems(
-      items.map((item) => {
-        if (item.id !== id) return item
-        return { ...item, lastChecked: null }
-      }),
-    )
-  }
-
   return (
     <div className="min-h-full">
-      <div className="px-6 pt-16 pb-0 pl-3 pr-3">
+      <div className="px-6 pt-10 pb-0 pl-3 pr-3">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setFilter("all")}
-              className={`text-[36px] font-bold transition-colors duration-200 ${
+              className={`text-2xl font-bold transition-colors duration-200 ${
                 filter === "all" ? "text-foreground" : "text-muted-foreground"
               }`}
             >
-              {t.checklist.all}
+              전체
             </button>
             <button
               onClick={() => setFilter("unchecked")}
-              className={`text-[36px] font-bold transition-colors duration-200 ${
+              className={`text-2xl font-bold transition-colors duration-200 ${
                 filter === "unchecked" ? "text-foreground" : "text-muted-foreground"
               }`}
             >
-              {t.checklist.unchecked}
+              체크안됨
             </button>
           </div>
 
@@ -111,7 +91,7 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
                 <div className="fixed inset-0 z-40" onClick={() => setShowDropdown(false)} />
                 <div className="absolute right-0 mt-2 w-48 dark:bg-[#2c2c2e]/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-black/10 dark:border-white/10 z-50 overflow-hidden bg-muted">
                   <div className="p-2 bg-card border-none">
-                    <div className="px-3 py-2 text-xs font-semibold text-muted-foreground">{t.checklist.viewOptions}</div>
+                    <div className="px-3 py-2 text-xs font-semibold text-muted-foreground">보기 옵션</div>
                     <button
                       onClick={() => {
                         setViewMode("grid")
@@ -124,7 +104,7 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
                       }`}
                     >
                       <Grid2X2 className="w-4 h-4" />
-                      <span className="text-sm font-medium">{t.checklist.grid}</span>
+                      <span className="text-sm font-medium">그리드</span>
                       {viewMode === "grid" && <Check className="w-4 h-4 ml-auto" />}
                     </button>
                     <button
@@ -139,7 +119,7 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
                       }`}
                     >
                       <List className="w-4 h-4" />
-                      <span className="text-sm font-medium">{t.checklist.list}</span>
+                      <span className="text-sm font-medium">리스트</span>
                       {viewMode === "list" && <Check className="w-4 h-4 ml-auto" />}
                     </button>
                   </div>
@@ -157,10 +137,10 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
               <Check className="w-10 h-10 text-muted-foreground" />
             </div>
             <p className="text-lg font-semibold text-foreground mb-2">
-              {filter === "all" ? t.checklist.noActiveItems : t.checklist.allChecked}
+              {filter === "all" ? "아직 활성화된 항목이 없어요" : "모든 항목이 체크되었어요"}
             </p>
             <p className="text-sm text-muted-foreground">
-              {filter === "all" ? t.checklist.activateItemsHint : t.checklist.allCheckedMessage}
+              {filter === "all" ? "체크 항목 탭에서 항목을 활성화해보세요" : "안심하고 외출하세요"}
             </p>
           </div>
         ) : viewMode === "grid" ? (
@@ -172,7 +152,7 @@ export function ChecklistView({ items, setItems }: ChecklistViewProps) {
         ) : (
           <div className="space-y-4">
             {filteredItems.map((item) => (
-              <ChecklistCard key={item.id} item={item} onCheck={handleCheck} onUncheck={handleUncheck} />
+              <ChecklistCard key={item.id} item={item} onCheck={handleCheck} />
             ))}
           </div>
         )}
